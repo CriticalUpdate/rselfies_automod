@@ -1,0 +1,205 @@
+# Complaining about the sub removals
+    type: comment
+    body (includes): 
+        - "this sub is turning into"
+        - "this sub has turned into"
+        - "SJW"
+        - "hugbox"
+        - "echo chamber"
+        - "feminazi"
+        - "censorship"
+        - "fuck you"
+        - "cunt"
+        - "slut"
+        - "whore"
+        - "whing?y"
+        - "circlejerk"
+        - "circle jerk"
+        - "circle-jerk"
+        - "attention whore"
+    action: remove
+    action_reason: possibly complaining about the sub
+    modmail: |
+        Removed for possibly complaining about the sub: {{match}}. Please investigate
+        
+        {{body}}
+
+---
+# Attack removals
+    type: comment
+    body (includes): 
+        - "get raped"
+        - "kill yourself"
+        - "kys" 
+        - "get cancer"
+        - "You deserved it"
+        - "You asked for it"
+    action: remove
+    action_reason: possibly attacking the OP or another commenter
+    modmail: | 
+        Removed for possibly attacking the OP or another commenter: {{match}}. Please investigate, and possibly ban.
+        
+        Comment: "{{body}}"    
+---
+# Slur removals
+     type: comment
+     body (regex, includes): 
+         - "fag(got)?"
+         - "tranny"
+         - "retard(ed)?"
+         - "you'?re? a cunt"
+         - "nigg(er|a)"
+         - "chink"
+         - "jap"
+         - "gook"
+         - "(you'?re?|what) a bitch"
+         - "cunt"
+         - "pedo(phile)?"
+     action: remove
+     modmail: |
+         Removed for possibly using a slur: {{match}}. Please investigate.
+         
+         Comment: "{{body}}"
+     
+---
+# Personal Info removals
+    type: comment
+    author:
+        is_submitter: false #should no longer remove OP's comment when posting social media
+    body (includes-word, regex): 
+        - "(D|P)M"
+        - "(message|msg) me"
+        - "(message|msg)"
+        - "(snap)chat"
+        - "kik"
+        - "instagram"
+        - "more (pics|photos|pictures|pix)"
+        - "snap buddies"
+    action: remove
+    action_reason: Removed for asking for personal info
+    modmail: |
+        Removed for asking for personal info: {{match}}
+        
+        Comment: "{{body}}"
+    
+---
+# REMOVING POSTS WITH "DM/PM ME" IN THE TITLE
+    priority: -1
+    type: submission
+    title (includes-word, regex):
+        - "(pm|dm) me"
+        - "(pm|dm)'?s open'"
+    action: remove
+    action_reason: "Asking for Dms in title"
+    comment_locked: true
+    comment: |
+        If you are 18+ and are happy to PM/share your social media accounts, this needs to be posted as a comment ONLY, not in your title. If you ask users to DM you in your title, it will be removed.
+        
+        If this was removed in error, please [message the mods](https://reddit.com/message/compose?to=/r/selfies).
+---
+# Trying to dismiss someone because they use filters/edits
+    type: comment
+    ~body: "what filter is that"
+    body (regex): ["why use a filter","are you ugly without the filter", "filter"]
+    action: remove
+    modmail: |
+        Removed for saying: {{match}}, please investigate.
+        
+        Comment: "{{body}}"
+---
+# Mod mention reporter
+    priority: -1
+    type: any
+    body+title (regex, includes-word): ["mod(erator)?[']?s?", "admin[']?s?"]
+    action: report
+    action_reason: "Mod mention: {{match}}"
+    
+---
+# Flair under 18 posts
+    title: ["11", "12", "13", "14", "15", "16", "17"]
+    set_flair: "Under 18"
+---
+# Remove <13 posts and alert mods
+    type: submission
+    title: 
+        - "11"
+        - "12"
+    action: remove
+    action_reason: "User is <13 years old"
+    modmail_subject: "Underage user <13"
+    modmail: "This post was removed for OP possibly being <13. Please investigate."
+---
+# Remove posts without age in the title
+    priority: -1
+    ~title (includes): ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    action: remove
+    action_reason: "No age in title"
+    comment_locked: true
+    comment: |
+        It looks like you didn't include your age in the title.
+        
+        This post has been removed.
+        
+        We encourage you to repost with your age in the title.
+
+---
+#Sends a Modmail when someone uses the Verification Flair
+priority: 100 
+Title (regex,includes):
+    - "verif(y|ied|ication)"
+Type: submission
+set_flair: ["Verification"]
+Message: Hi {{author}}  I see you have used Verification or Verify in the title of your post.  I have let the mods know to look at this post in case you wanted to be verified for r/Selfies.  Please do not delete this post.  Even if you get the message about not meeting the standards.  If this is a Verification Post, the Mods can approve it and then will allow your posts in the future.  Thanks for Verifying.  
+modmail_subject: "Verification Post"
+modmail: |
+       There is a new post in /r/{{subreddit}} requesting Verification.
+
+       Title: {{title}}
+
+       User: {{author}}
+
+       {{permalink}}
+
+
+---
+#Remove Submissions where the OP is under 32 Days 
+priority: 90
+type: submission
+~title (includes, regex): # prevents verification posts being removed
+    - "verif(y|ication)"
+author:
+    is_contributor: false   
+    account_age: "< 33 days"
+action: remove
+comment: We require a minimum account-age and karma for r/Selfies before you are allowed to post. These minimums will be waived if you post a verification photo.  A verification photo is simply a selfie of you holding a handwritten piece of paper that includes your name, r/Selfies , and today's date. Your submission was not deleted!  After you are approved, moderators will release your earlier submissions.  We welcome you to verify or resubmit your post after you have established yourself on Reddit.  
+#modmail_subject: "Low age account"
+#modmail: |
+#
+#    The above {{kind}} by /u/{{author}} was removed because the user did not meet the minimum requirements. # 
+#    Please investigate and ensure that this action was correct. 
+#
+#    Title {{title}}  
+#
+#    Permalink {{permalink}}
+
+---
+#Remove Submissions where the OP is under 250 Karma
+priority: 90
+type: submission
+~title (includes, regex): # prevents verification posts being removed
+    - "verif(y|ication)"
+author:
+    is_contributor: false   
+    comment_karma: "< 250"
+action: remove
+comment: We require a minimum account-age and karma for r/Selfies before you are allowed to post. These minimums will be waived if you post a verification photo.  A verification photo is simply a selfie of you holding a handwritten piece of paper that includes your name, r/selfies , and today's date. Your submission was not deleted!  After you are approved, moderators will release your earlier submissions.  We welcome you to verify or resubmit your post after you have established yourself on Reddit.  
+
+#modmail_subject: "Low karma account"
+#modmail: |
+#    The above {{kind}} by /u/{{author}} was removed because the user did not meet the minimum requirements. 
+#
+#    Please investigate and ensure that this action was correct. 
+#
+#    Title {{title}}
+#
+#    Permalink {{permalink}}
